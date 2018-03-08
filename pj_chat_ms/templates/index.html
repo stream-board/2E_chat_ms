@@ -49,6 +49,11 @@ $(function(){
             //Events
             socket.onopen = function() {
                 console.log('Connected to chat socket');
+                socket.send(JSON.stringify({
+                    'category': 'JOIN-ROOM',
+                    'room_id': room_id,
+                    'sender': $('.js-feak-info').data('sender'),
+                }))
             }
 
             socket.onclose = function() {
@@ -58,13 +63,19 @@ $(function(){
             socket.onmessage = function (msg) {
                 console.log("Got websocket message " + msg.data);
                 var data = JSON.parse(msg.data);
+                var msgEntry = '';
+                if (data.category === 'JOIN-ROOM') {
+                    msgEntry = '<h5>' + data.message + '</h5>'
+                } else {
+                    var msgEntry = '<div>room id:'+ data.room_id +' msg: '+ data.message +' </div>';
+                }
 
-                var msgEntry = '<div>room id:'+ data.room_id +' msg: '+ data.message +' </div>';
                 $('.js-chat-messages').append(msgEntry);
             }
 
             $('.js-form-chat').on('submit', function() {
                 socket.send(JSON.stringify({
+                    'category': 'NEW-MESSAGE',
                     'room_id': room_id,
                     'sender': $('.js-feak-info').data('sender'),
                     'message': $(this).find('input').val()
