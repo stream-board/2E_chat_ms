@@ -18,6 +18,7 @@
 <div class="js-chat-messages">
 
 </div>
+<button type="" data-id="1" class="js-create-room">Crear sala</button>
 <div class="js-input-message">
     <form class="js-form-chat" action="">
         <input type="text" name="" value="" placeholder="">
@@ -30,6 +31,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(function(){
+    $('.js-create-room').on('click', function() {
+        $.post('/room/', {id: '1'}, function(data, textStatus, xhr) {
+            /*optional stuff to do after success */
+            console.log(data);
+        });
+    });
     $('.js-chat-room-btn').on('click', function() {
         var that = $(this);
 

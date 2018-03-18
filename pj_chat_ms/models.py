@@ -1,9 +1,8 @@
 from django.db import models
 
 class ChatRoom(models.Model):
-    name = models.CharField(
-        max_length=128,
-        verbose_name='nombre',
+    chat_room_id = models.PositiveIntegerField(
+        primary_key=True
     )
 
 
