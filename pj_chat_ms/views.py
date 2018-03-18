@@ -24,40 +24,34 @@ class ChatRoomView(View):
             chat_room=chat_room,
         );
 
-        return JsonResponse({
-            'status': 200,
-            'room_id': kwargs['room_id'],
-            'chat_messages': [{
+        return JsonResponse([{
+                'id': chat_message.id,
                 'sender': chat_message.sender,
                 'message': chat_message.message
-            } for chat_message in chat_messages]
-        })
+            } for chat_message in chat_messages],
+            safe=False
+        )
 
 
 class ChatRoomCreateView(View):
     def post(self, request, *args, **kwargs):
-        chat_room_id = request.POST['id']
-        status = 400
-        message = 'Bad request'
+        print(request.POST)
+        chat_room_id = request.POST.get('id', 0)
 
         if chat_room_id:
             chat_room = ChatRoom(id=chat_room_id)
             chat_room.save()
-            status = 200
-            message = 'Room created'
 
         return JsonResponse({
-            'status': status,
-            'message': message
+            'id': chat_room_id
         })
 
 
 class ChatRoomDeleteView(View):
     def delete(self, request, *args, **kwargs):
-        chat_room= get_object_or_404(ChatRoom, chat_room_id=kwargs['room_id'])
+        chat_room = get_object_or_404(ChatRoom, chat_room_id=kwargs['room_id'])
         chat_room.delete()
 
         return JsonResponse({
-            'status': 200,
-            'message': 'Room deleted'
+            'id': kwargs['room_id']
         })
