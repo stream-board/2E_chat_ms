@@ -19,8 +19,9 @@ def index(request):
 
 class ChatRoomView(View):
     def get(self, request, *args, **kwargs):
+        chat_room = get_object_or_404(ChatRoom, id=kwargs['room_id'])
         chat_messages = ChatMessage.objects.filter(
-            chat_room_id=kwargs['room_id'],
+            chat_room=chat_room,
         );
 
         return JsonResponse({
@@ -33,16 +34,14 @@ class ChatRoomView(View):
         })
 
 
-class RoomCreateView(View):
+class ChatRoomCreateView(View):
     def post(self, request, *args, **kwargs):
-        print(request.POST)
         chat_room_id = request.POST['id']
-        print(chat_room_id)
         status = 400
         message = 'Bad request'
 
         if chat_room_id:
-            chat_room = ChatRoom(chat_room_id=chat_room_id)
+            chat_room = ChatRoom(id=chat_room_id)
             chat_room.save()
             status = 200
             message = 'Room created'
@@ -53,8 +52,8 @@ class RoomCreateView(View):
         })
 
 
-class RoomDeleteView(View):
-    def post(self, request, *args, **kwargs):
+class ChatRoomDeleteView(View):
+    def delete(self, request, *args, **kwargs):
         chat_room= get_object_or_404(ChatRoom, chat_room_id=kwargs['room_id'])
         chat_room.delete()
 

@@ -1,7 +1,7 @@
 from django.db import models
 
 class ChatRoom(models.Model):
-    chat_room_id = models.PositiveIntegerField(
+    id = models.PositiveIntegerField(
         primary_key=True
     )
 

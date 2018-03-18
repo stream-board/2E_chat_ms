@@ -10,7 +10,7 @@ application = ProtocolTypeRouter({
     # WebSocket chat handler
     "websocket": SessionMiddlewareStack(
         URLRouter([
-            path("chat/<int:room_id>", ChatConsumer),
+            path("chat-room/<int:room_id>", ChatConsumer),
         ]),
     )
 })

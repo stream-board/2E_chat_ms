@@ -32,7 +32,7 @@
 <script type="text/javascript">
 $(function(){
     $('.js-create-room').on('click', function() {
-        $.post('/room/', {id: '1'}, function(data, textStatus, xhr) {
+        $.post('/chat-room/', {id: '1'}, function(data, textStatus, xhr) {
             /*optional stuff to do after success */
             console.log(data);
         });
@@ -40,10 +40,10 @@ $(function(){
     $('.js-chat-room-btn').on('click', function() {
         var that = $(this);
 
-        $.get('/chat/'+ that.data('room-id'), function(data) {
+        $.get('/chat-room/'+ that.data('room-id'), function(data) {
             var room_id = that.data('room-id');
             var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-            var ws_path = ws_scheme + '://' + window.location.host + "/chat/" + room_id;
+            var ws_path = ws_scheme + '://' + window.location.host + "/chat-room/" + room_id;
 
             console.log("Connecting to " + ws_path);
             $.each(data.chat_messages, function(index, val) {
