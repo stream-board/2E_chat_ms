@@ -1,0 +1,133 @@
+#Test with: http://editor.swagger.io/
+
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Microservice for chat
+  description: Python + MySQL + redis
+  license:
+    name: Software Architecture 2018-I
+host: 192.168.99.102:4001
+basePath: /
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /chat-room:
+    post:
+      summary: Creates a new chat room
+      operationId: createChatRoom
+      parameters:
+        - name: id
+          in: body
+          required: true
+          description: ChatRoom Object
+          schema:
+            $ref: '#/definitions/ChatRoom'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /chat-room/{id}:
+    get:
+      summary: Returns ChatMessages of the ChatRoom with the given id
+      operationId: getChatRoom
+      parameters:
+        - name: id
+          in: path
+          description: The id of the chatRoom to be returned
+          required: true
+          type: integer
+
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/ChatMessageList'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+
+    delete:
+      summary: Deletes a chatRoom with the given id
+      operationId: deleteChatRoom
+      parameters:
+        - name: id
+          in: path
+          description: The id of the ChatRoom to be deleted
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+definitions:
+
+  # ChatRooms
+  ChatRoom:
+    type: object
+    properties:
+      id:
+        type: integer
+
+  ChatMessage:
+    type: object
+    properties:
+      id:
+        type: integer
+      message:
+        type: string
+      sender:
+        type: string
+
+  ChatMessageList:
+    type: object
+    required:
+      - total
+      - list
+    properties:
+      total:
+        type: number
+      list:
+        type: array
+        items:
+          $ref: '#/definitions/ChatMessage'
+
+# Errors
+  ErrorModel:
+    type: object
+    required:
+      - message
+      - code
+    properties:
+      message:
+        type: string
+      code:
+        type: number
+      description:
+        type: object
