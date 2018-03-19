@@ -4,7 +4,7 @@ services:
   redis:
     image: redis:latest
 
-  pj_chat_db:
+  chat-db:
     image: mysql
     ports:
         - "3307:3306"
@@ -12,14 +12,14 @@ services:
         MYSQL_ROOT_PASSWORD: chatStreamBoard
         MYSQL_USER: user
         MYSQL_PASSWORD: chatStreamBoard
-        MYSQL_DATABASE: pj_chat_ms_development
-        MYSQL_HOST: pj_chat_db
+        MYSQL_DATABASE: chat_ms_development
+        MYSQL_HOST: chat-db
 
-  pj_chat_ms:
+  chat-ms:
     build: .
     command: bash -c "python3.6 manage.py runserver 0.0.0.0:8000"
     ports:
       - "4004:8000"
     depends_on:
       - redis
-      - pj_chat_db
+      - chat-db
