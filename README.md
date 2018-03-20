@@ -21,7 +21,7 @@ The app use [Channels 2.0](https://channels.readthedocs.io/en/latest/) with [cha
   ```
   Event triggered when a socket disconnects from the server. When it triggers it does the following sequence of events:
   * Remove channel_name from GROUP_CHAT-{id}
-  ```
+  
   
 * Receive
   ```
