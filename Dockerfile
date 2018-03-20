@@ -1,6 +1,6 @@
 FROM python:3.6
 ENV PYTHONUNBUFFERED 1
-ENV REDIS_HOST "redis"
+ENV REDIS_HOST "chat-db-1"
 RUN mkdir /code
 WORKDIR /code
 COPY . /code/
