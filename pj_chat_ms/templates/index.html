@@ -46,7 +46,7 @@ $(function(){
             var ws_path = ws_scheme + '://' + window.location.host + "/chat-room/" + room_id;
 
             console.log("Connecting to " + ws_path);
-            $.each(data.chat_messages, function(index, val) {
+            $.each(data, function(index, val) {
                 var message = '<p> room id:'+ data.room_id +', message:' + val.message +'</p>';
                 $('.js-chat-messages').append(message);
             });
