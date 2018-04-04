@@ -25,7 +25,7 @@ SECRET_KEY = '3d3ylg%l0pfu*az_(1@*polx4798)(%dkia#55%e*2u!&v=@6t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '192.168.99.102', '192.168.99.101']
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '192.168.99.102', '192.168.99.101', '192.168.0.28', 'ec2-54-224-164-98.compute-1.amazonaws.com']
 
 PROJECT_APPS = [
     'pj_chat_ms'
