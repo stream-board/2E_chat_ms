@@ -25,12 +25,10 @@ class ChatConsumer(JsonWebsocketConsumer):
         message = event.get('message', '')
 
         if category == 'NEW-MESSAGE':
-            async_to_sync(
-                ChatMessage.objects.create(
-                    chat_room_id=room_id,
-                    sender=sender,
-                    message=message,
-                )
+            chat_message = ChatMessage.objects.create(
+                chat_room_id=room_id,
+                sender=sender,
+                message=message,
             )
 
             async_to_sync(
@@ -43,6 +41,7 @@ class ChatConsumer(JsonWebsocketConsumer):
                         'message': message,
                         'room_id': room_id,
                         'sender': sender,
+                        'id': chat_message.id,
                     },
                 )
         elif category == 'JOIN-ROOM':
@@ -61,9 +60,11 @@ class ChatConsumer(JsonWebsocketConsumer):
         room_id = event.get('room_id')
         sender = event.get('sender')
         message = event.get('message')
+        chat_message_id = event.get('id', '')
 
         self.send_json({
             'category': 'NEW-MESSAGE',
+            'id': chat_message_id,
             'room_id': room_id,
             'sender': sender,
             'message': message,
