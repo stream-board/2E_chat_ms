@@ -27,7 +27,7 @@ class ChatRoomView(View):
 
         return JsonResponse([{
             'id': chat_message.id,
-            'sender': chat_message.sender,
+            'user_id': chat_message.user_id,
             'message': chat_message.message
         } for chat_message in chat_messages],
             safe=False

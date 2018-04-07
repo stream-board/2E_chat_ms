@@ -21,13 +21,13 @@ class ChatConsumer(JsonWebsocketConsumer):
     def receive_json(self, event):
         category = event.get('category')
         room_id = event.get('room_id')
-        sender = event.get('sender')
+        user_id = event.get('user_id')
         message = event.get('message', '')
 
         if category == 'NEW-MESSAGE':
             chat_message = ChatMessage.objects.create(
                 chat_room_id=room_id,
-                sender=sender,
+                user_id=user_id,
                 message=message,
             )
 
@@ -40,7 +40,7 @@ class ChatConsumer(JsonWebsocketConsumer):
                         'type': 'chat.message',
                         'message': message,
                         'room_id': room_id,
-                        'sender': sender,
+                        'user_id': user_id,
                         'id': chat_message.id,
                     },
                 )
@@ -52,13 +52,13 @@ class ChatConsumer(JsonWebsocketConsumer):
                     ),
                     {
                         'type': 'chat.join',
-                        'sender': sender,
+                        'user_id': user_id,
                     },
                 )
 
     def chat_message(self, event):
         room_id = event.get('room_id')
-        sender = event.get('sender')
+        user_id = event.get('user_id')
         message = event.get('message')
         chat_message_id = event.get('id', '')
 
@@ -66,16 +66,16 @@ class ChatConsumer(JsonWebsocketConsumer):
             'category': 'NEW-MESSAGE',
             'id': chat_message_id,
             'room_id': room_id,
-            'sender': sender,
+            'user_id': user_id,
             'message': message,
         })
 
     def chat_join(self, event):
-        sender = event.get('sender')
+        user_id = event.get('user_id')
         self.send_json({
             'category': 'JOIN-ROOM',
             'message': JOIN_MESSAGE.format(
-                user=sender,
+                user=user_id,
             ),
         })
 

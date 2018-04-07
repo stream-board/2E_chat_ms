@@ -59,7 +59,7 @@ $(function(){
                 socket.send(JSON.stringify({
                     'category': 'JOIN-ROOM',
                     'room_id': room_id,
-                    'sender': $('.js-feak-info').data('sender'),
+                    'user_id': 1,
                 }))
             }
 
@@ -84,7 +84,7 @@ $(function(){
                 socket.send(JSON.stringify({
                     'category': 'NEW-MESSAGE',
                     'room_id': room_id,
-                    'sender': $('.js-feak-info').data('sender'),
+                    'user_id': 1,
                     'message': $(this).find('input').val()
                 }))
 

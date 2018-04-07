@@ -13,9 +13,8 @@ class ChatMessage(models.Model):
         verbose_name='chat room',
     )
 
-    sender = models.CharField(
-        max_length=128,
-        verbose_name='sender',
+    user_id = models.PositiveIntegerField(
+        verbose_name='user id',
     )
 
     message = models.CharField(
