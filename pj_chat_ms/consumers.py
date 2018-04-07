@@ -23,11 +23,12 @@ class ChatConsumer(JsonWebsocketConsumer):
         room_id = event.get('room_id')
         user_id = event.get('user_id')
         message = event.get('message', '')
+        print(user_id)
 
         if category == 'NEW-MESSAGE':
             chat_message = ChatMessage.objects.create(
                 chat_room_id=room_id,
-                user_id=user_id,
+                user_id=int(user_id),
                 message=message,
             )
 
