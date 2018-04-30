@@ -1,5 +1,4 @@
 version: "2"
-
 services:
   chat-db-1:
     image: redis:latest
