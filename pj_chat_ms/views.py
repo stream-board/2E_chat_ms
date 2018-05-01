@@ -20,6 +20,7 @@ def index(request):
 
 class ChatRoomView(View):
     def get(self, request, *args, **kwargs):
+        print(request);
         chat_room = get_object_or_404(ChatRoom, id=kwargs['room_id'])
         chat_messages = ChatMessage.objects.filter(
             chat_room=chat_room,

@@ -16,9 +16,9 @@ services:
 
   chat-ms:
     build: .
-    command: bash -c "python3.6 manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python3.6 manage.py runserver 0.0.0.0:4004"
     ports:
-      - "4004:8000"
+      - "4004:4004"
     depends_on:
       - chat-db-1
       - chat-db
